@@ -13,6 +13,7 @@ const db = pgp({
 
 
 
+
 routes.get('/apis', async (req, res) => {
     const all = await db.manyOrNone("select * from apis");
     res.status(200).json(all);
