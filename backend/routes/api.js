@@ -19,14 +19,9 @@ routes.get('/apis', async (req, res) => {
     if (req.query.category) {
         sql += 'where category = $(category)'
     }
-
-
-     
     const all = await db.manyOrNone('select * from apis where category = $(category)', {category: req.query.category});
     res.status(200).json(all);
 });
-
-
 
 
 
