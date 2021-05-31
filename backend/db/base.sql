@@ -6,7 +6,7 @@ id SERIAL PRIMARY KEY,
 name citext NOT NULL,
 description citext NOT NULL,
 url text UNIQUE NOT NULL,
-cateogry citext NOT NULL,
+category citext NOT NULL,
 auth boolean, 
 cors boolean
 );
