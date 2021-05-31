@@ -15,12 +15,19 @@ const db = pgp({
 
 
 routes.get('/apis', async (req, res) => {
-    let sql = "select * from apis";
     if (req.query.category) {
-        sql += 'where category = $(category)'
+            const all = await db.manyOrNone('select * from apis where category = $(category)', {
+                category: req.query.category
+
+            });
+        res.status(200).json(all);
+    } else {
+        const all = await db.manyOrNone('select * from apis') 
+                    
+                    res.status(200).json(all);
     }
-    const all = await db.manyOrNone('select * from apis where category = $(category)', {category: req.query.category});
-    res.status(200).json(all);
+
+   
 });
 
 // routes.post('/apis', (req, res) => {
