@@ -43,7 +43,26 @@ routes.get('/apis', async (req, res) => {
 // });
 
 
+routes.put('/apis', async (req, res) => {
 
+    const newAPI = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES () RETURNING id', {
+
+        id: req.body.id,
+        name: req.body.name,
+        description: req.body.description,
+        url: req.body.url,
+        category: req.body.category,
+        auth: req.body.auth,
+        cors: req.body.cors
+
+    });
+
+    const newAPI = await db.one('UPDATE id, name, description, url, category, auth, cors FROM apis WHERE id=${id}', {
+            id: XPathResult.id
+        }),
+
+        return res.status(201).json(newAPI);
+});
 
 
 
