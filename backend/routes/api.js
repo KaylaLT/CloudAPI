@@ -25,17 +25,18 @@ routes.get('/apis', async (req, res) => {
    
 });
 
-// routes.post('/apis', (req, res) => {
-//      const newApis = {
-//          name: req.body.name,
-//          description: req.body.description,
-//          url: req.body.url,
-//          auth: req.body.auth,
-//          cors: req.body.cors
+//  routes.post('/apis', (req, res) => {
+//       const newApis = {
+//           name: req.body.name,
+//           description: req.body.description,
+//           category: req.body.category,
+//           url: req.body.url,
+//           auth: req.body.auth,
+//           cors: req.body.cors
 //      }
-//      doors.push(newApis);
+//     doors.push(newApis);
 //      res.status(201).json(newApis);
-// });
+//  });
 
 
 routes.put('/apis', async (req, res) => {
