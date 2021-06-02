@@ -26,7 +26,7 @@ routes.get('/apis', async (req, res) => {
 });
 
 
-
+//THERE'S SOME ERROR HERE??
 //  routes.post('/apis', async (req, res) => {
 //      const newApi = await db.one('INSERT INTO apis (id, name, description, category, url, auth, cors) VALUES (  ) RETURNING id')
 //      {
@@ -43,11 +43,6 @@ routes.get('/apis', async (req, res) => {
 //      return res.status(201).json(newApi);
 //  });
 
-
-
-        // const temperature = await db.one('SELECT id, city_id, date, temperature FROM temperatures WHERE id = ${id}', { id: result.id })
-        
-        // return res.status(201).json(temperature);
 
 
 
