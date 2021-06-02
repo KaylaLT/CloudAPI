@@ -19,9 +19,40 @@ routes.get('/apis', async (req, res) => {
 });
 
 
-routes.get('/apis/:id', async (req, res) => {
 
-})
+
+
+routes.get('/apis/:category', async (req, res) => {
+
+    res.json(await db.oneOrNone(`SELECT * FROM states WHERE id = ${category}`, {
+        category: req.params.category
+    }));
+
+    if (!category) {
+        return res.status(404).send('Category could not be found')
+    }
+    res.json(category)
+});
+
+
+
+
+//getting deprecated error - name cannot be used 
+routes.get('/apis/:name', async (req, res) => {
+
+    res.json(await db.oneOrNone(`SELECT * FROM states WHERE name = ${name}`, {
+        name: req.params.name
+    }));
+
+
+    if (!name) {
+        return res.status(404).send('Name could not be found')
+    }
+    res.json(name)
+});
+
+
+
 
 
 routes.put('/apis', async (req, res) => {
@@ -42,9 +73,6 @@ routes.put('/apis', async (req, res) => {
         
         return res.status(201).json(newAPI);
 });
-
-
-
 
 
 
