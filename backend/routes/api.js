@@ -25,8 +25,11 @@ routes.get('/apis', async (req, res) => {
    
 });
 
-//  routes.post('/apis', (req, res) => {
-//       const newApis = {
+
+
+//  routes.post('/apis', async (req, res) => {
+//      const newApi = await db.one('INSERT INTO apis (id, name, description, category, url, auth, cors) VALUES (  ) RETURNING id')
+//      {
 //           name: req.body.name,
 //           description: req.body.description,
 //           category: req.body.category,
@@ -34,17 +37,24 @@ routes.get('/apis', async (req, res) => {
 //           auth: req.body.auth,
 //           cors: req.body.cors
 //      }
-//     apis.push(newApis);
-//      res.status(201).json(newApis);
+
+//      apis.push(newApi)
+     
+//      return res.status(201).json(newApi);
 //  });
 
+
+
+        // const temperature = await db.one('SELECT id, city_id, date, temperature FROM temperatures WHERE id = ${id}', { id: result.id })
+        
+        // return res.status(201).json(temperature);
 
 
 
 
 routes.get('/apis/:category', async (req, res) => {
 
-    res.json(await db.oneOrNone(`SELECT * FROM states WHERE id = ${category}`, {
+    res.json(await db.oneOrNone(`SELECT * FROM apis WHERE id = ${category}`, {
         category: req.params.category
     }));
 
@@ -58,18 +68,18 @@ routes.get('/apis/:category', async (req, res) => {
 
 
 //getting deprecated error - name cannot be used 
-routes.get('/apis/:name', async (req, res) => {
+// routes.get('/apis/:name', async (req, res) => {
 
-    res.json(await db.oneOrNone(`SELECT * FROM states WHERE name = ${name}`, {
-        name: req.params.name
-    }));
+//     res.json(await db.oneOrNone(`SELECT * FROM states WHERE name = ${name}`, {
+//         name: req.params.name
+//     }));
 
 
-    if (!name) {
-        return res.status(404).send('Name could not be found')
-    }
-    res.json(name)
-});
+//     if (!name) {
+//         return res.status(404).send('Name could not be found')
+//     }
+//     res.json(name)
+// });
 
 
 
@@ -89,9 +99,9 @@ routes.put('/apis', async (req, res) => {
 
     });
 
-    const newAPI = await db.one('UPDATE id, name, description, url, category, auth, cors FROM apis WHERE id = ${id}', { id: update.id } ),
+    const apiUpdated = await db.one('UPDATE id, name, description, url, category, auth, cors FROM apis WHERE id = ${id}', { id: update.id } ),
         
-        return res.status(201).json(update);
+        return res.status(201).json(apiUpdated);
 });
 
 
