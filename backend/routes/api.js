@@ -6,46 +6,35 @@ const db = pgp({
 });
 
 
-
-
-
-
-
-
-
-
 routes.get('/apis', async (req, res) => {
     if (req.query.category) {
-            const all = await db.manyOrNone('select * from apis where category = $(category)', {
-                category: req.query.category
+        const all = await db.manyOrNone('select * from apis where category = $(category)', {
+            category: req.query.category
 
-            });
+        });
         res.status(200).json(all);
     } else {
-        const all = await db.manyOrNone('select * from apis') 
-                    
-                    res.status(200).json(all);
-    }
+        const all = await db.manyOrNone('select * from apis')
 
-   
+        res.status(200).json(all);
+    }
 });
 
-// routes.post('/apis', (req, res) => {
-//      const newApis = {
-//          name: req.body.name,
-//          description: req.body.description,
-//          url: req.body.url,
-//          auth: req.body.auth,
-//          cors: req.body.cors
-//      }
-//      doors.push(newApis);
-//      res.status(201).json(newApis);
-// });
+routes.get('/apis/:category', async (req, res) => {
 
+    res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = ${category}', {
+        category: req.params.category
+    }));
+
+    if (!category) {
+        return res.status(404).send('Category could not be found')
+    }
+    res.json(category)
+});
 
 routes.put('/apis', async (req, res) => {
 
-    const newAPI = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES () RETURNING id', {
+    const apiUpdated = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( ${id}, ${name}, ${description}, ${url}, ${category}, ${auth}, ${cors} ) RETURNING id', {
 
         id: req.body.id,
         name: req.body.name,
@@ -56,21 +45,21 @@ routes.put('/apis', async (req, res) => {
         cors: req.body.cors
 
     });
-
-    const newAPI = await db.one('UPDATE id, name, description, url, category, auth, cors FROM apis WHERE id=${id}', {
-            id: XPathResult.id
-        }),
-
-        return res.status(201).json(newAPI);
+    res.status(201).json(apiUpdated);
 });
 
+routes.post('/apis', async (req, res) => {
+    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category},     ${auth}, ${cors})')
+    name: req.body.name;
+    description: req.body.description;
+    url: req.body.url;
+    category: req.body.category;
+    auth: req.body.auth;
+    cors: req.body.cors;
+});
+apis.push(newApi)
+return res.status(201).json(newApi)
 
 
 
-
-
-
-
-
-
-module.exports = routes;
+module.exports = routes
