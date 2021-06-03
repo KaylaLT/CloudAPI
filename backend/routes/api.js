@@ -22,7 +22,7 @@ routes.get('/apis', async (req, res) => {
 
 routes.get('/apis/:category', async (req, res) => {
 
-    res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = ${category}', {
+    res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = $(category)', {
         category: req.params.category
     }));
 
@@ -34,7 +34,7 @@ routes.get('/apis/:category', async (req, res) => {
 
 routes.put('/apis', async (req, res) => {
 
-    const apiUpdated = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( ${id}, ${name}, ${description}, ${url}, ${category}, ${auth}, ${cors} ) RETURNING id', {
+    const apiUpdated = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( $(id), $(name), $(description), $(url), $(category), $(auth), $(cors) ) RETURNING id', {
 
         id: req.body.id,
         name: req.body.name,
@@ -49,7 +49,7 @@ routes.put('/apis', async (req, res) => {
 });
 
 routes.post('/apis', async (req, res) => {
-    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category},     ${auth}, ${cors})')
+    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category),     $(auth), $(cors))')
     name: req.body.name;
     description: req.body.description;
     url: req.body.url;
