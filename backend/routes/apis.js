@@ -30,40 +30,53 @@ routes.get('/apis/:category', async (req, res) => {
 });
 
 routes.put('/apis', async (req, res) => {
-    const apiUpdated = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( $(id), $(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
-        id: req.body.id,
-        name: req.body.name,
-        description: req.body.description,
-        url: req.body.url,
-        category: req.body.category,
-        auth: req.body.auth,
-        cors: req.body.cors
-    });
-    res.status(201).json(apiUpdated);
+    try {
+        const apiUpdated = await db.one('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( $(id), $(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
+            id: req.body.id,
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            category: req.body.category,
+            auth: req.body.auth,
+            cors: req.body.cors
+        });
+        res.status(201).json(apiUpdated);
+    } catch (error) {
+        if (error.constraint === 'url') {
+            return res.status(500).send('this url already has a home')
+        }
+    }
 });
 
 routes.post('/apis', async (req, res) => {
-    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
-        name: req.body.name,
-        description: req.body.description,
-        url: req.body.url,
-        category: req.body.category,
-        auth: req.body.auth,
-        cors: req.body.cors
-    });
-    apis.push(newApi)
-    return res.status(201).json()
+    try {
+        const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category}, ${auth}, ${cors}) RETURNING id', {
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            category: req.body.category,
+            auth: req.body.auth,
+            cors: req.body.cors,
+        });
+        console.log('working')
+        
+        const posted = await db.one('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = ${id}', { id: newApi.id });
+        return res.status(201).json(posted)
+    } catch (error) {
+        if (error.constraint === 'url') {
+            return res.status(400).json(error);
+        }
+    }
+
 });
 
-routes.delete('/apis/:id', async (req, res) => {
-    const toBeDeleted = await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)')
-    if (!toBeDeleted) {
-        res.status(400).send('The api does not exist')
-    } else {
-        await db.one('DELETE FROM apis WHERE id = ${id}')
-        res.status(204).send('Your data has been successfully deleted')
-    }
-});
+
+    routes.delete('/apis/:id', async (req, res) => {
+        await db.none('DELETE FROM apis WHERE id =${id}', {
+            id: +req.params.id
+        });
+        return res.status(204).send();
+    });
 
 
 module.exports = routes;
