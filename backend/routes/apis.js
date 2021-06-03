@@ -56,7 +56,7 @@ routes.post('/apis', async (req, res) => {
 });
 
 routes.delete('/apis/:id', async (req, res) => {
-    const toBeDeleted = await db.oneOrNone('SELECT * FROM apis WHERE id = ${id}')
+    const toBeDeleted = await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)')
     if (!toBeDeleted) {
         res.status(400).send('The api does not exist')
     } else {
