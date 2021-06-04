@@ -19,16 +19,15 @@ routes.get('/apis', async (req, res) => {
     
 });
 
-routes.get('/apis/:category', async (req, res) => {
-
-    res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = $(category)', {
-        category: req.params.category
+routes.get('/apis/:id', async (req, res) => {   
+    const id = res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)', {
+        id: req.params.id
     }));
-    console.log('working 2')
-    if (!category) {
-        return res.status(404).send('Category could not be found')
+    console.log('working 2') 
+    if (!id) {
+        return res.status(404).send('id could not be found')
     }
-    res.json(category)
+    res.json()
     
 });
 
@@ -42,14 +41,16 @@ routes.put('/apis', async (req, res) => {
             url: req.body.url,
             category: req.body.category,
             auth: req.body.auth,
-            cors: req.body.cors
-        });
-        console.log('working 3')
+            cors: req.body.cors,
+        },
+        console.log('working 3'));        
         res.status(201).json(apiUpdated);
     } catch (error) {
-        if (error.constraint === 'apis_pkey') {
-            return res.status(500).send('your update has failed')
+        if (error.constraint === 'url') {
+            return res.status(500).send('your update has failed'),
+            console.log('working 3.5')
         }
+        
     }
     
 });
@@ -75,7 +76,6 @@ routes.post('/apis', async (req, res) => {
         }
     }
     console.log('working 5')
-
 });
 
 
