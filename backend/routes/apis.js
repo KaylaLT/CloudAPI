@@ -64,7 +64,6 @@ routes.put('/apis/:id', async (req, res) => {
     res.json(
         await db.oneOrNone(`SELECT id, name, description, url, category, auth, cors from apis WHERE id = $(id)`, {
             id: +req.params.id
-
         }))
 }),
 
