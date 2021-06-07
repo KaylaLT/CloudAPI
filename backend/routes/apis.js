@@ -8,66 +8,73 @@ const db = pgp({
 
 routes.get('/apis', async (req, res) => {
     if (req.query.category) {
-        const all = await db.manyOrNone('select * from apis where category = $(category)', {
+        const getCategory = await db.manyOrNone('select * from apis where category = $(category)', {
             category: req.query.category
         });
-        res.status(200).json(all);
+        res.status(200).json(getCategory);
     } else {
         const all = await db.manyOrNone('select * from apis')
         res.status(200).json(all);
     }
-    
+
 });
 
-routes.get('/apis/:id', async (req, res) => {   
-    const id = res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)', {
-        id: req.params.id
-    }));
-    console.log('working 2') 
-    if (!id) {
+routes.get('/apis/:id', async (req, res) => {
+    const api = await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)', {
+        id: +req.params.id
+    });
+    if (!api) {
         return res.status(404).send('id could not be found')
     }
-    res.json()
-    
+    res.json(api)
+
 });
 
 
 routes.put('/apis/:id', async (req, res) => {
-    
-    const apiUpdated = await db.oneOrNone('SELECT id from apis WHERE id = $(id)', {
+
+    const idExists = await db.oneOrNone('SELECT id from apis WHERE id = $(id)', {
         id: +req.params.id
-        // name: req.params.name,
-        // description: req.params.description,
-        // url: req.params.url,
-        // category: req.params.category,
-        // auth: req.params.auth,
-        // cors: req.params.cors
-    });console.log('works here')
-    if (!apiUpdated) {
-        
-        return res.status(404).send('Your update failed');
-    } const upDated = await db.oneOrNone(
-        'UPDATE apis SET $(id) = $(change) WHERE id = $(id) RETURNING id',
-        {
-            
-            id: +req.params.id,
-            // column: req.body.column,
-            change: req.body.change,
-        });
+
+    });
+
+    if (!idExists) {
+        return res.status(404).send('The id does not exist');
+    }
+
+     await db.oneOrNone(
+        `UPDATE apis SET 
+        name = $(name),
+        description = $(description),
+        url = $(url),
+        category = $(category),
+        auth = $(auth),
+        cors = $(cors)
+        WHERE id = $(id)
+        `, {
+
+        id: +req.params.id,
+        name: req.body.name,
+        description: req.body.description,
+        url: req.body.url,
+        category: req.body.category,
+        auth: req.body.auth,
+        cors: req.body.cors
+    });
     res.json(
-        await db.oneOrNone(`SELECT id, name, description, url, category, auth, cors from cities WHERE id = $(id)`, {
-            id: upDated.id,
+        await db.oneOrNone(`SELECT id, name, description, url, category, auth, cors from apis WHERE id = $(id)`, {
+            id: +req.params.id
 
         }))
 }),
 
-    
-    
-    
-    
+
+
+
+
     routes.post('/apis', async (req, res) => {
         try {
-            const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category}, ${auth}, ${cors}) RETURNING id', {
+            const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
                 name: req.body.name,
                 description: req.body.description,
                 url: req.body.url,
@@ -75,9 +82,11 @@ routes.put('/apis/:id', async (req, res) => {
                 auth: req.body.auth,
                 cors: req.body.cors,
             });
-            console.log('working 4')
-        
-            const posted = await db.oneOrNone('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = ${id}', { id: newApi.id });
+            
+
+            const posted = await db.oneOrNone('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = $(id)', {
+                id: newApi.id
+            });
             return res.status(201).json(posted)
         } catch (error) {
             if (error.constraint === 'url') {
@@ -95,7 +104,7 @@ routes.put('/apis/:id', async (req, res) => {
         });
         console.log('working 6');
         return res.status(204).send();
-        
+
     });
 
 
