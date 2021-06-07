@@ -74,7 +74,7 @@ routes.put('/apis/:id', async (req, res) => {
 
     routes.post('/apis', async (req, res) => {
         try {
-            const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category}, ${auth}, ${cors}) RETURNING id', {
+            const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
                 name: req.body.name,
                 description: req.body.description,
                 url: req.body.url,
@@ -82,9 +82,9 @@ routes.put('/apis/:id', async (req, res) => {
                 auth: req.body.auth,
                 cors: req.body.cors,
             });
-            console.log('working 4')
+            
 
-            const posted = await db.oneOrNone('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = ${id}', {
+            const posted = await db.oneOrNone('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = $(id)', {
                 id: newApi.id
             });
             return res.status(201).json(posted)
