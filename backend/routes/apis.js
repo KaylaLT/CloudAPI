@@ -64,7 +64,6 @@ routes.put('/apis/:id', async (req, res) => {
     res.json(
         await db.oneOrNone(`SELECT id, name, description, url, category, auth, cors from apis WHERE id = $(id)`, {
             id: +req.params.id
-
         }))
 }),
 
@@ -93,18 +92,17 @@ routes.put('/apis/:id', async (req, res) => {
                 return res.status(400).json(error);
             }
         }
-        console.log('working 5')
     }),
 
 
 
     routes.delete('/apis/:id', async (req, res) => {
-        await db.none('DELETE FROM apis WHERE id =${id}', {
+
+        await db.none('DELETE FROM apis WHERE id =$(id)', {
             id: +req.params.id
         });
-        console.log('working 6');
-        return res.status(204).send();
 
+        return res.status(204).send();
     });
 
 
