@@ -10,10 +10,21 @@
 }
 
 .divider {
-    padding-top: 1em;
+    display: flex;
+    align-items: center;
     border-bottom: 1px solid grey;
     width: 100%;
 }
+
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+
+
 
 @media (max-width: 600px) {
     /* For most Phone sizes */
@@ -38,13 +49,20 @@
         display: flex;
         justify-content: space-around;
         margin-top: 1em;
+        margin-bottom: 1em;
     }
 
     .category {
         min-width: 100%;
         height: 100px;
+        margin-top: 1em;
     }
 }
+
+
+
+
+
 
 @media (min-width: 601px) and (max-width: 768px) {
     /* For Tablets and Notebook sizes */
@@ -60,20 +78,47 @@
     .categories-buttons {
         width: 100%;
         flex-direction: column;
-        display: flex;
-        justify-content: space-around;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
         padding-top: 1em;
     }
 
     .category {
-        min-width: 50%;
+        min-width: 49%;
         height: 100px;
+        margin-bottom: 1em;
+    }
+
+    .button-pair {
+        display: flex;
+        justify-content: space-between;
     }
 }
+
+
+
+
+
 
 @media (min-width: 769px) {
     /* For Laptop and Desktop sizes */
     .divider {
         display: none;
+    }
+
+    .categories-buttons {
+        display: flex;
+        width: 100%;
+        padding-top: 1em;
+    }
+
+    .category {
+        min-width: 15%;
+        height: 75px;
+    }
+    
+    .categories-buttons #single-button {
+        flex-direction: row;
     }
 }
