@@ -19,16 +19,16 @@ export class ApiService {
 
 
 
-  getID(){
+  getID(id: number){
+    return this.http.get(`http://localhost:3000/apis/${id}`);
+  };
+
+  getCategory(){
     return this.http.get('http://localhost:3000/apis');
   };
 
-  getCategory(category: any){
-    return this.http.get(`http://localhost:3000/apis/?=${category}`);
-  };
-
-  postNewAPI(id: any){
-    return this.http.get(`http://localhost:3000/apis/${id}`);
+  postNewAPI(){
+    return this.http.get('http://localhost:3000/apis');
   };
 
   Update(id: any){
