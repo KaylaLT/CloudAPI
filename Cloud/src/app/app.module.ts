@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { PageHeaderComponent } from './page-header/page-header.component';
+import { PageFooterComponent } from './page-footer/page-footer.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { FormsModule } from '@angular/forms';
     AboutComponent,
     FavoritesComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PageHeaderComponent,
+    PageFooterComponent
   ],
   imports: [
     BrowserModule,
