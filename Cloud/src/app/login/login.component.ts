@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
+import { Interface } from '../interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   constructor( private apiService: ApiService ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+  
+  results: Interface[] | null = null;
 
 }

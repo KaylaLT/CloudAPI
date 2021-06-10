@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { stringify } from '@angular/compiler/src/util';
 
 
 @Injectable({
@@ -11,7 +9,7 @@ import { stringify } from '@angular/compiler/src/util';
 export class ApiService {
 
   apiUrl: string = 'http://localhost:3000/apis';
-  idUrl: string = 'http://localhost:3000/apis/:id';
+  idUrl: string = 'http://localhost:3000/apis';
   categoryUrl: string = 'http://localhost:3000/apis/?=category';
   updateUrl: string = 'http://localhost:3000/apis/:id';
   postUrl: string = 'http://localhost:3000/apis';
@@ -21,42 +19,35 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
 
-  searchAPIS(search: any | null) {
-    let searchDatabase = {
-      
-    }
-      
+
+  searchAPIS(search:string): Observable<any> {
+
+    return this.http.get(this.apiUrl)
   }
 
 
-
-  getID(id: number){
-    return this.http.get(this.idUrl);
-    // `http://localhost:3000/apis/${id}`
+  getID(id: number): Observable<any> {
+    return this.http.get(`${this.idUrl}/${id}`);
   };
 
 
-  getCategory(category: string){
-    return this.http.get(this.categoryUrl);
-    // 'http://localhost:3000/apis/?=category'
+  getCategory(category: string): Observable<any> {
+    return this.http.get(`${this.categoryUrl}/${category}`);
   };
 
 
-  postNewAPI(){
+  postNewAPI(): Observable<any> {
     return this.http.get(this.postUrl);
-    // 'http://localhost:3000/apis'
   };
 
 
-  update(id: number){
-    return this.http.get(this.updateUrl);
-    // `http://localhost:3000/apis/${id}`
+  update(id: number): Observable<any> {
+    return this.http.get(`${this.updateUrl}/${id}`);
   };
 
 
-  delete(id: number){
-    return this.http.delete(this.deleteUrl);
-    // `http://localhost:3000/apis/${id}`
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.deleteUrl}/${id}`);
   }
 
 
