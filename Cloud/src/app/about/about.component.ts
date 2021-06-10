@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Interface } from '../interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor( private apiService: ApiService ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
+  
+  results: Interface[] | null = null;
 
 }

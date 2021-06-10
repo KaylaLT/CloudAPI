@@ -8,117 +8,52 @@ const db = pgp({
 
 routes.get('/apis', async (req, res) => {
     if (req.query.category) {
-
-        const all = await db.manyOrNone('select * from apis where category = $(category)', {
+        const getCategory = await db.manyOrNone('select * from apis where category = $(category)', {
             category: req.query.category
         });
-        res.status(200).json(all);
+        res.status(200).json(getCategory);
     } else {
         const all = await db.manyOrNone('select * from apis')
         res.status(200).json(all);
-
     }
+
 });
 
-routes.get('/apis/:category', async (req, res) => {
-
-
-    res.json(await db.oneOrNone('SELECT * FROM apis WHERE id = $(category)', {
-        category: req.params.category
-    }));
-
-    if (!category) {
-        return res.status(404).send('Category could not be found')
+routes.get('/apis/:id', async (req, res) => {
+    const api = await db.oneOrNone('SELECT * FROM apis WHERE id = $(id)', {
+        id: +req.params.id
+    });
+    if (!api) {
+        return res.status(404).send('id could not be found')
     }
-    res.json(category)
+    res.json(api)
+
 });
 
-routes.put('/apis', async (req, res) => {
 
-    const apiUpdated = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES ( $(id), $(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
+routes.put('/apis/:id', async (req, res) => {
 
-        id: req.body.id,
-        name: req.body.name,
-        description: req.body.description,
-        url: req.body.url,
-        category: req.body.category,
-        auth: req.body.auth,
-        cors: req.body.cors
-
-        
-    });
-        res.status(201).json(apiUpdated);
-});
-
-routes.post('/apis', async (req, res) => {
-    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES (${name}, ${description}, ${url}, ${category},     ${auth}, ${cors})')
-    name: req.body.name;
-    description: req.body.description;
-    url: req.body.url;
-    category: req.body.category;
-    auth: req.body.auth;
-    cors: req.body.cors;
-    });
-    apis.push(newApi)
-return res.status(201).json(newApi)
-
-
-
-module.exports = routes
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // routes.put('/apis', async (req, res) => {
-
-    //     const newAPI = await db.many('INSERT INTO apis (id, name, description, url, category, auth, cors) VALUES () RETURNING id', {
-
-    //         id: req.body.id,
-    //         name: req.body.name,
-    //         description: req.body.description,
-    //         url: req.body.url,
-    //         category: req.body.category,
-    //         auth: req.body.auth,
-    //         cors: req.body.cors
-
-    //     });
+    const idExists = await db.oneOrNone('SELECT id from apis WHERE id = $(id)', {
+        id: +req.params.id
 
     });
-    res.status(201).json(apiUpdated);
-});
 
-routes.post('/apis', async (req, res) => {
-    const newApi = await db.one('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
+    if (!idExists) {
+        return res.status(404).send('The id does not exist');
+    }
+
+     await db.oneOrNone(
+        `UPDATE apis SET 
+        name = $(name),
+        description = $(description),
+        url = $(url),
+        category = $(category),
+        auth = $(auth),
+        cors = $(cors)
+        WHERE id = $(id)
+        `, {
+
+        id: +req.params.id,
         name: req.body.name,
         description: req.body.description,
         url: req.body.url,
@@ -126,20 +61,49 @@ routes.post('/apis', async (req, res) => {
         auth: req.body.auth,
         cors: req.body.cors
     });
-    apis.push(newApi)
-    return res.status(201).json()
-});
+    res.json(
+        await db.oneOrNone(`SELECT id, name, description, url, category, auth, cors from apis WHERE id = $(id)`, {
+            id: +req.params.id
+        }))
+}),
 
-routes.delete('/apis/:id', async (req, res) => {
-    const toBeDeleted = await db.oneOrNone('SELECT * FROM apis WHERE id = ${id}')
-    if (!toBeDeleted) {
-        res.status(400).send('The api does not exist')
-    } else {
-        await db.one('DELETE FROM apis WHERE id = ${id}')
-        res.status(204).send('Your data has been successfully deleted')
-    }
-});
+
+
+
+
+    routes.post('/apis', async (req, res) => {
+        try {
+            const newApi = await db.oneOrNone('INSERT INTO apis (name, description, url, category, auth, cors) VALUES ($(name), $(description), $(url), $(category), $(auth), $(cors)) RETURNING id', {
+                name: req.body.name,
+                description: req.body.description,
+                url: req.body.url,
+                category: req.body.category,
+                auth: req.body.auth,
+                cors: req.body.cors,
+            });
+            
+
+            const posted = await db.oneOrNone('SELECT id, name, description, url, category, auth, cors FROM apis WHERE id = $(id)', {
+                id: newApi.id
+            });
+            return res.status(201).json(posted)
+        } catch (error) {
+            if (error.constraint === 'url') {
+                return res.status(400).json(error);
+            }
+        }
+    }),
+
+
+
+    routes.delete('/apis/:id', async (req, res) => {
+
+        await db.none('DELETE FROM apis WHERE id =$(id)', {
+            id: +req.params.id
+        });
+
+        return res.status(204).send();
+    });
 
 
 module.exports = routes;
-
