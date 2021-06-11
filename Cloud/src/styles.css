@@ -1,24 +1,13 @@
 * {
   margin: 0;
   padding: 0;
+}
+body {
   font-family: sans-serif;
   background-color: #f2f2f2;
 }
 
-.header-navbar {
-  width: 100%;
-  min-height: 30px;
-  height: 7vh;
-  position: fixed;
-  top: 0;
-  background-color: #20a8b4;
-  border-bottom: #ff5c0f 15px line;
-  z-index: 1;
-  margin: 10px;
-  align-items: center;
-  font-family: Sans-Serif;
-  background-color: #20a8b4;
-}
+
 h1 {
   text-decoration: none;
   color: #20a8b4;
