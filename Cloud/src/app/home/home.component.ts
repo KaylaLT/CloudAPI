@@ -9,7 +9,7 @@ import { Interface } from '../interface';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+   
   constructor(private apiService: ApiService, private http: HttpClient) { }
   
 

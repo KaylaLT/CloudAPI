@@ -1,0 +1,12 @@
+<form class="search-bar">
+  <mat-form-field class="filters">
+    <mat-label>Api Search</mat-label>
+    <input type="text" placeholder="Search" aria-label="Apis" matInput [formControl]="myControl"
+      [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
