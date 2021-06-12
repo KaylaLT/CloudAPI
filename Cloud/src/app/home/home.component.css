@@ -23,14 +23,26 @@ body{
 h4{
   margin-top: 40px;
   margin-bottom: 40px;
-  color: #fff;
+  color: #000;
 }
 
-button{
-  display: inline;
-}
 
 .about-button{
   margin-right: 20px;
+}
+
+
+button{
+  display: inline-block;
+  border: 2px solid #f2f2f2;
+  height: 70px;
+  width: 200px;
+  border-radius: 4px;
+  position: relative;
+  background: linear-gradient(90deg, transparent, #ffffff);
+  text-transform: uppercase;
+  overflow: hidden;
+  filter: hue-rotate(0deg);
+  transition: all 0.1s linear;
 }
 
