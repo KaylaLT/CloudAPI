@@ -15,6 +15,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilterComponent } from './filter/filter.component';
+import { PracticeComponent } from './practice/practice.component';
+import { ResultsComponent } from './results/results.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,9 @@ import { FilterComponent } from './filter/filter.component';
     LoginComponent,
     PageHeaderComponent,
     PageFooterComponent,
-    FilterComponent
+    FilterComponent,
+    PracticeComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
