@@ -6,12 +6,12 @@
 body {
   font-family: sans-serif;
   background-image: linear-gradient(to right, #f2f2f2 , #20a8b4, #ff5c0f);
-  height:100vh;
+  height:100%;
   min-height:100%;
 }
 h1 {
   text-decoration: none;
-  color: #20a8b4;
-  font-size: 30px;
-  margin: 5px;
+  color: #f2f2f2;
+  font-size: 60px;
+   -webkit-text-stroke: 1px orangered;
 }
