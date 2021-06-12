@@ -2,20 +2,13 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #f2f2f2;
-}
+};
+
+/* #f2f2f2 , #ff5c0f, #20a8b4 */
 
 .home_logo{
   position: relative;
 }
 
-@media (max-width: 600px) {
-  /* For most Phone sizes */
-}
 
-@media (min-width: 601px) and (max-width: 768px) {
-  /* For Tablets and Notebook sizes */
-}
-@media (min-width: 769px) {
-  /* For Laptop and Desktop sizes */
-}
+

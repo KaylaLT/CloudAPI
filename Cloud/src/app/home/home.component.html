@@ -1,14 +1,29 @@
 <app-page-header> </app-page-header>
-<head>
-  <img class="home_logo" src="/Cloud/src/assets/CloudAPILogo.svg" alt="logo" />
-</head>
+  <app-filter></app-filter>
 <body>
   <h1>Build Amazing Things with APIs</h1>
   <h4>Practice using APIs to build full stack apps today</h4>
-  <div>
-    <button>About</button>
-    <button>Practice</button>
-  </div>
+ 
+    <div class="button">
+    
+    <button class="about-button" routerLink="/about">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      About
+    </button>
+
+
+    <button class="practice-button" routerLink="/practice">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Practice
+    </button>
+</div>
+
 </body>
-<app-filter></app-filter>
+
 <app-page-footer></app-page-footer>
