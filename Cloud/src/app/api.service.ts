@@ -20,7 +20,7 @@ export class ApiService {
 
 
 
-  searchAPIS(search:string): Observable<any> {
+   searchAPIS(search:string):Observable<any> {
 
     return this.http.get(this.apiUrl)
   }

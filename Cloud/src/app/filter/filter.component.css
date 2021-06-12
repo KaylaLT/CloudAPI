@@ -2,6 +2,7 @@
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+  padding-left: 5px;
 }
 
 .filters{
@@ -9,6 +10,7 @@
 }
 
 input{
+  
   border: 1px solid black;
-  border-radius: 20px;
+  border-radius: 5px;
 }
