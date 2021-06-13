@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { PageFooterComponent } from './page-footer/page-footer.component';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FilterComponent } from './filter/filter.component';
 import { PracticeComponent } from './practice/practice.component';
 import { ResultsComponent } from './results/results.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -36,12 +37,13 @@ import { ResultsComponent } from './results/results.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // BrowserAnimationsModule,
+    //BrowserAnimationsModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
