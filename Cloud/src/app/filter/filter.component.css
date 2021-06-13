@@ -16,3 +16,12 @@ input{
   border-radius: 5px;
   column-rule-style: groove;
 }
+
+
+.search-button{
+  background-color: black;
+  color: #ffffff;
+  border-radius: 4px;
+  text-decoration: none;
+
+}

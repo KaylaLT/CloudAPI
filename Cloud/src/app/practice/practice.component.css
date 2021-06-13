@@ -1,0 +1,78 @@
+
+#get-box{
+    background-color: rgb(42, 39, 39);
+    height: 150px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#id-box{
+    background-color: rgb(42, 39, 39);
+    height: 150px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+#put-box{
+    background-color: rgb(42, 39, 39);
+    height: 150px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#post-box{
+    background-color: rgb(42, 39, 39);
+    height: 150px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#delete-box{
+    background-color: rgb(42, 39, 39);
+    height: 150px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+.try-boxes{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+h4{
+    margin-left: 30%;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+#subheading{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+h3{
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.available-routes{
+    margin-left: 20px;
+}

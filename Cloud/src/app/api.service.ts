@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  apiUrl: string = 'http://localhost:3000/apis';
-  idUrl: string = 'http://localhost:3000/apis';
-  categoryUrl: string = 'http://localhost:3000/apis/?=category';
+  apiUrl: string = 'http://localhost:3000/apis'; // this returns all APIs with category search term
+  idUrl: string = 'http://localhost:3000/apis/:id';
+  categoryUrl: string = 'http://localhost:3000/apis/:category';
   updateUrl: string = 'http://localhost:3000/apis/:id';
   postUrl: string = 'http://localhost:3000/apis';
   deleteUrl: string = 'http://localhost:3000/apis/:id';
+  nameURL: string = 'http://localhost:3000/apis/:name';
 
   
   constructor(private http: HttpClient) {}
@@ -23,7 +24,8 @@ export class ApiService {
    searchAPIS(search:string):Observable<any> {
 
     return this.http.get(this.apiUrl)
-  }
+   }
+  
 
 
   getID(id: number): Observable<any> {
@@ -31,8 +33,9 @@ export class ApiService {
   };
 
 
-  getCategory(category: string): Observable<any> {
-    return this.http.get(`${this.categoryUrl}/${category}`);
+
+  getName(name: string): Observable<any> {
+    return this.http.get(`${this.nameURL}/${name}`);
   };
 
 
